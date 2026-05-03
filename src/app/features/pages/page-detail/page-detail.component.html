@@ -1,0 +1,44 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">{{ page?.title || 'Pagina' }}</h1>
+      @if (page) {
+        <p class="muted">{{ page.routePath }}</p>
+      }
+    </div>
+    <a class="button secondary" routerLink="/app/pages">Volver</a>
+  </div>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (page) {
+    <section class="grid two">
+      <article class="panel">
+        <h2>Preview</h2>
+        <iframe class="preview" [srcdoc]="page.htmlContent"></iframe>
+      </article>
+
+      <article class="panel grid">
+        <div>
+          <p class="muted">Estado</p>
+          <span class="status ok">{{ page.status }}</span>
+        </div>
+        <div>
+          <p class="muted">Slug</p>
+          <strong>{{ page.slug }}</strong>
+        </div>
+        <div>
+          <p class="muted">Request</p>
+          <a [routerLink]="['/app/requests', page.requestId]">{{ page.requestId }}</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>HTML</h2>
+      <pre>{{ page.htmlContent }}</pre>
+    </section>
+  }
+</div>

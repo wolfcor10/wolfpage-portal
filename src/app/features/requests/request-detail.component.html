@@ -1,0 +1,49 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Solicitud</h1>
+      <p class="muted">{{ request?.correlationId || 'Procesando' }}</p>
+    </div>
+    <a class="button secondary" routerLink="/app/pages">Paginas</a>
+  </div>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (request) {
+    <section class="panel grid">
+      <div>
+        <p class="muted">Estado</p>
+        <span
+          class="status"
+          [class.ok]="request.status === 'Completed'"
+          [class.warn]="request.status === 'Pending' || request.status === 'Processing'"
+          [class.danger]="request.status === 'Failed'"
+        >
+          {{ request.status }}
+        </span>
+      </div>
+
+      <div>
+        <p class="muted">Creada</p>
+        <strong>{{ request.createdAt | date: 'medium' }}</strong>
+      </div>
+
+      @if (request.processedAt) {
+        <div>
+          <p class="muted">Procesada</p>
+          <strong>{{ request.processedAt | date: 'medium' }}</strong>
+        </div>
+      }
+
+      @if (request.errorMessage) {
+        <p class="error">{{ request.errorMessage }}</p>
+      }
+
+      @if (request.pageId) {
+        <a class="button" [routerLink]="['/app/pages', request.pageId]">Abrir pagina</a>
+      }
+    </section>
+  }
+</div>

@@ -1,0 +1,50 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="muted">Actividad reciente del tenant actual</p>
+    </div>
+    <a class="button" routerLink="/app/pages/new">Crear pagina</a>
+  </div>
+
+  <section class="grid two">
+    <article class="panel">
+      <p class="muted">Templates publicados</p>
+      <h2>{{ templates.length }}</h2>
+    </article>
+    <article class="panel">
+      <p class="muted">Paginas generadas</p>
+      <h2>{{ pages.length }}</h2>
+    </article>
+  </section>
+
+  <section class="panel">
+    <div class="page-header">
+      <h2>Ultimas paginas</h2>
+      <a routerLink="/app/pages">Ver todas</a>
+    </div>
+
+    @if (pages.length) {
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Pagina</th>
+            <th>Estado</th>
+            <th>Creada</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (page of pages.slice(0, 5); track page.id) {
+            <tr>
+              <td><a [routerLink]="['/app/pages', page.id]">{{ page.title }}</a></td>
+              <td><span class="status ok">{{ page.status }}</span></td>
+              <td>{{ page.createdAt | date: 'short' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="muted">No hay paginas generadas.</p>
+    }
+  </section>
+</div>

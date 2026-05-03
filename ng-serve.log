@@ -1,0 +1,31 @@
+
+> wolfpage-portal@0.0.0 start
+> ng serve --host 127.0.0.1 --port 4200
+
+[33m>[39m Building...
+[32m√[39m Building...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m                   [2m | [22m [1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m                    [2m | [22m [36m14.36 kB[39m[2m | [22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m                  [2m | [22m  [36m2.89 kB[39m[2m | [22m
+[32mchunk-OAEV456Z.js[39m  [2m | [22m[2m-[22m                       [2m | [22m  [36m2.65 kB[39m[2m | [22m
+[32mchunk-WB4KWMIU.js[39m  [2m | [22m[2m-[22m                       [2m | [22m[36m153 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m           [2m | [22m [1m20.06 kB[22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m                   [2m | [22m [1mRaw size[22m
+[32mchunk-BZ2DZJQG.js[39m  [2m | [22m[2musers-component[22m         [2m | [22m [36m12.21 kB[39m[2m | [22m
+[32mchunk-DVW5MD72.js[39m  [2m | [22m[2mpage-create-component[22m   [2m | [22m [36m10.06 kB[39m[2m | [22m
+[32mchunk-5YAASAY3.js[39m  [2m | [22m[2mrequest-detail-component[22m[2m | [22m  [36m8.98 kB[39m[2m | [22m
+[32mchunk-YYQFHUGY.js[39m  [2m | [22m[2mlogin-component[22m         [2m | [22m  [36m8.46 kB[39m[2m | [22m
+[32mchunk-4D6LT7XO.js[39m  [2m | [22m[2mtemplates-component[22m     [2m | [22m  [36m8.36 kB[39m[2m | [22m
+[32mchunk-5WHLP5OQ.js[39m  [2m | [22m[2mpage-detail-component[22m   [2m | [22m  [36m8.35 kB[39m[2m | [22m
+[32mchunk-QRPWHD4T.js[39m  [2m | [22m[2mdashboard-component[22m     [2m | [22m  [36m7.84 kB[39m[2m | [22m
+[32mchunk-DM3YNEDG.js[39m  [2m | [22m[2mpages-list-component[22m    [2m | [22m  [36m7.46 kB[39m[2m | [22m
+[32mchunk-3FMN3AO6.js[39m  [2m | [22m[2m-[22m                       [2m | [22m  [36m1.55 kB[39m[2m | [22m
+
+Application bundle generation complete. [2.053 seconds] - 2026-05-02T23:51:14.251Z
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+[2m6:51:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because lockfile has changed
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m4200[22m/[39m

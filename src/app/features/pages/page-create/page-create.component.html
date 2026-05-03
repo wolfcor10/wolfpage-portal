@@ -1,0 +1,49 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Crear pagina</h1>
+      <p class="muted">Generacion desde template publicado</p>
+    </div>
+  </div>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  <form class="panel grid" [formGroup]="form" (ngSubmit)="submit()">
+    <label class="field">
+      <span>Template</span>
+      <select class="select" formControlName="templateVersionId">
+        <option value="">Selecciona una version</option>
+        @for (option of options; track option.version.id) {
+          <option [value]="option.version.id">
+            {{ option.template.name }} v{{ option.version.versionNumber }}
+          </option>
+        }
+      </select>
+    </label>
+
+    <div class="grid two">
+      <label class="field">
+        <span>Nombre</span>
+        <input class="input" type="text" formControlName="pageName" />
+      </label>
+
+      <label class="field">
+        <span>Slug</span>
+        <input class="input" type="text" formControlName="slug" placeholder="mi-negocio" />
+      </label>
+    </div>
+
+    <label class="field">
+      <span>Contenido JSON</span>
+      <textarea class="textarea" formControlName="contentJson"></textarea>
+    </label>
+
+    <div>
+      <button class="button" type="submit" [disabled]="submitting || loadingTemplates">
+        {{ submitting ? 'Generando...' : 'Generar' }}
+      </button>
+    </div>
+  </form>
+</div>
