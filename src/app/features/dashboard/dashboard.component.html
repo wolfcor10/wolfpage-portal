@@ -1,50 +1,165 @@
-<div class="page">
-  <div class="page-header">
+<div class="dashboard-page">
+  <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap mb-4">
     <div>
-      <h1 class="page-title">Dashboard</h1>
-      <p class="muted">Actividad reciente del tenant actual</p>
+      <h4 class="fs-7 mb-1 fw-semibold">Dashboard</h4>
+      <p class="mb-0 text-muted">Actividad reciente del workspace actual</p>
     </div>
-    <a class="button" routerLink="/app/pages/new">Crear pagina</a>
+
+    <a class="btn btn-primary rounded-pill px-4 d-inline-flex align-items-center gap-2" routerLink="/app/pages/new">
+      <i class="ti ti-wand fs-5"></i>
+      Crear pagina
+    </a>
   </div>
 
-  <section class="grid two">
-    <article class="panel">
-      <p class="muted">Templates publicados</p>
-      <h2>{{ templates.length }}</h2>
-    </article>
-    <article class="panel">
-      <p class="muted">Paginas generadas</p>
-      <h2>{{ pages.length }}</h2>
-    </article>
-  </section>
-
-  <section class="panel">
-    <div class="page-header">
-      <h2>Ultimas paginas</h2>
-      <a routerLink="/app/pages">Ver todas</a>
+  <div class="row">
+    <div class="col-lg-8 d-flex align-items-stretch">
+      <div class="card w-100 overflow-hidden">
+        <div class="card-body position-relative">
+          <div class="row align-items-center">
+            <div class="col-sm-7">
+              <span class="badge bg-primary-subtle text-primary fw-semibold mb-3">WolfPage Generator</span>
+              <h5 class="fs-6 fw-semibold mb-2">Generacion interna lista</h5>
+              <p class="text-muted mb-4">
+                Elige un template publicado, captura el contenido del negocio y dispara el worker desde el portal.
+              </p>
+              <div class="d-flex gap-2 flex-wrap">
+                <a class="btn btn-primary rounded-pill px-4" routerLink="/app/pages/new">Nueva pagina</a>
+                <a class="btn btn-outline-primary rounded-pill px-4" routerLink="/app/templates">Ver templates</a>
+              </div>
+            </div>
+            <div class="col-sm-5 d-none d-sm-block text-end">
+              <img
+                src="assets/powerfuladmin/images/backgrounds/man-working-on-laptop.png"
+                class="dashboard-hero-img"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    @if (pages.length) {
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Pagina</th>
-            <th>Estado</th>
-            <th>Creada</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (page of pages.slice(0, 5); track page.id) {
-            <tr>
-              <td><a [routerLink]="['/app/pages', page.id]">{{ page.title }}</a></td>
-              <td><span class="status ok">{{ page.status }}</span></td>
-              <td>{{ page.createdAt | date: 'short' }}</td>
-            </tr>
+    <div class="col-sm-6 col-lg-2 d-flex align-items-stretch">
+      <div class="card w-100">
+        <div class="card-body">
+          <span class="round-48 rounded-1 bg-success-subtle d-flex align-items-center justify-content-center mb-3">
+            <i class="ti ti-template text-success fs-7"></i>
+          </span>
+          <p class="mb-1 text-muted">Templates</p>
+          <h4 class="fw-semibold mb-0">{{ templates.length }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-2 d-flex align-items-stretch">
+      <div class="card w-100">
+        <div class="card-body">
+          <span class="round-48 rounded-1 bg-info-subtle d-flex align-items-center justify-content-center mb-3">
+            <i class="ti ti-files text-info fs-7"></i>
+          </span>
+          <p class="mb-1 text-muted">Paginas</p>
+          <h4 class="fw-semibold mb-0">{{ pages.length }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 d-flex align-items-stretch">
+      <div class="card w-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap mb-3">
+            <div>
+              <h5 class="card-title fw-semibold mb-1">Ultimas paginas</h5>
+              <p class="card-subtitle mb-0">Contenido generado recientemente</p>
+            </div>
+            <a class="btn btn-light-primary rounded-pill px-4" routerLink="/app/pages">Ver todas</a>
+          </div>
+
+          @if (latestPages.length) {
+            <div class="table-responsive">
+              <table class="table align-middle text-nowrap mb-0">
+                <thead>
+                  <tr>
+                    <th>Pagina</th>
+                    <th>Estado</th>
+                    <th>Creada</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (page of latestPages; track page.id) {
+                    <tr>
+                      <td>
+                        <a class="fw-semibold text-dark text-decoration-none" [routerLink]="['/app/pages', page.id]">
+                          {{ page.title }}
+                        </a>
+                        <p class="mb-0 text-muted fs-2">{{ page.slug }}</p>
+                      </td>
+                      <td>
+                        <span
+                          class="status"
+                          [class.ok]="statusTone(page.status) === 'ok'"
+                          [class.warn]="statusTone(page.status) === 'warn'"
+                          [class.danger]="statusTone(page.status) === 'danger'"
+                        >
+                          {{ page.status }}
+                        </span>
+                      </td>
+                      <td>{{ page.createdAt | date: 'short' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          } @else if (!loading) {
+            <div class="empty-state">
+              <span class="round-48 rounded-1 bg-primary-subtle d-flex align-items-center justify-content-center">
+                <i class="ti ti-file-plus text-primary fs-7"></i>
+              </span>
+              <p class="mb-0 text-muted">No hay paginas generadas.</p>
+            </div>
           }
-        </tbody>
-      </table>
-    } @else {
-      <p class="muted">No hay paginas generadas.</p>
-    }
-  </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 d-flex align-items-stretch">
+      <div class="card w-100">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-1">Resumen operativo</h5>
+          <p class="card-subtitle mb-4">Estado del flujo de generacion</p>
+
+          <div class="d-flex align-items-center justify-content-between py-3 border-bottom">
+            <div class="d-flex align-items-center gap-3">
+              <span class="round-40 rounded-1 bg-success-subtle d-flex align-items-center justify-content-center">
+                <i class="ti ti-circle-check text-success fs-5"></i>
+              </span>
+              <span class="fw-semibold">Publicadas</span>
+            </div>
+            <strong>{{ publishedPages }}</strong>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between py-3 border-bottom">
+            <div class="d-flex align-items-center gap-3">
+              <span class="round-40 rounded-1 bg-warning-subtle d-flex align-items-center justify-content-center">
+                <i class="ti ti-loader text-warning fs-5"></i>
+              </span>
+              <span class="fw-semibold">En proceso</span>
+            </div>
+            <strong>{{ pendingPages }}</strong>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between py-3">
+            <div class="d-flex align-items-center gap-3">
+              <span class="round-40 rounded-1 bg-primary-subtle d-flex align-items-center justify-content-center">
+                <i class="ti ti-message-2-code text-primary fs-5"></i>
+              </span>
+              <span class="fw-semibold">Templates activos</span>
+            </div>
+            <strong>{{ templates.length }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -69,9 +69,9 @@ export class PageCreateComponent implements OnInit {
       return;
     }
 
-    const tenantId = this.auth.currentUser?.tenantId;
-    if (!tenantId) {
-      this.error = 'Sesion sin tenant.';
+    const workspaceId = this.auth.getActiveWorkspaceId();
+    if (!workspaceId) {
+      this.error = 'Sesion sin workspace.';
       return;
     }
 
@@ -88,7 +88,7 @@ export class PageCreateComponent implements OnInit {
 
     this.api
       .generatePage({
-        tenantId,
+        workspaceId,
         templateVersionId: this.form.controls.templateVersionId.value,
         pageName: this.form.controls.pageName.value.trim(),
         slug: this.form.controls.slug.value.trim(),

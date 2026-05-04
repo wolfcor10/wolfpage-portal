@@ -1,42 +1,78 @@
-.login-page {
-  display: grid;
+:host {
+  display: block;
+}
+
+.wolf-login-page {
   min-height: 100vh;
-  place-items: center;
-  padding: 24px;
-  background:
-    linear-gradient(135deg, rgba(31, 111, 120, 0.1), rgba(22, 121, 76, 0.08)),
-    var(--bg);
+  overflow-x: hidden;
 }
 
-.login-panel {
-  display: grid;
-  width: min(100%, 420px);
-  gap: 24px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel);
-  padding: 28px;
-  box-shadow: 0 18px 44px rgba(23, 32, 42, 0.1);
+.wolf-login-surface {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 16px;
+  background-image: url("/assets/powerfuladmin/images/backgrounds/login-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.brand {
-  display: grid;
-  gap: 4px;
+.wolf-login-surface::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: rgba(3, 12, 27, 0.62);
 }
 
-.brand span {
-  color: var(--brand);
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+.wolf-login-shape {
+  z-index: 1;
+  display: flex;
+  width: min(90%, 420px);
 }
 
-.brand strong {
-  font-size: 28px;
-  line-height: 1.15;
+.wolf-login-shape::before,
+.wolf-login-shape::after {
+  display: none;
 }
 
-.form {
-  display: grid;
-  gap: 16px;
+.wolf-login-content {
+  position: relative;
+  z-index: 2;
+}
+
+.wolf-login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 22px 60px rgba(3, 12, 27, 0.28);
+}
+
+.wolf-login-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .wolf-login-surface {
+    background: linear-gradient(135deg, #071426 0%, #0b2545 100%);
+    background-image: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .wolf-login-surface {
+    padding: 24px 12px;
+  }
+
+  .wolf-login-shape {
+    width: min(92%, 420px);
+  }
+
+  .wolf-login-card {
+    margin-inline: 0 !important;
+  }
 }

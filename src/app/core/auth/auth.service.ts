@@ -29,6 +29,24 @@ export class AuthService {
     );
   }
 
+  setActiveWorkspace(workspaceId: string): void {
+    const user = this.currentUser;
+    const workspace = user?.workspaces.find((item) => item.id === workspaceId);
+
+    if (!user || !workspace) {
+      return;
+    }
+
+    const nextUser: CurrentUser = {
+      ...user,
+      activeWorkspaceId: workspace.id,
+      roles: workspace.roles,
+    };
+
+    localStorage.setItem(this.userKey, JSON.stringify(nextUser));
+    this.currentUserSubject.next(nextUser);
+  }
+
   loadProfile(): Observable<CurrentUser> {
     return this.http.get<CurrentUser>(`${API_BASE_URL}/auth/me`).pipe(
       tap((user) => {
@@ -47,6 +65,10 @@ export class AuthService {
 
   getAccessToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getActiveWorkspaceId(): string | null {
+    return this.currentUser?.activeWorkspaceId ?? null;
   }
 
   isAuthenticated(): boolean {

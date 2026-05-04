@@ -9,12 +9,20 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const auth = inject(AuthService);
   const router = inject(Router);
   const token = auth.getAccessToken();
+  const activeWorkspaceId = auth.getActiveWorkspaceId();
   const isLoginRequest = request.url === `${API_BASE_URL}/auth/login`;
 
-  const authRequest =
-    token && !isLoginRequest
-      ? request.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-      : request;
+  const headers: Record<string, string> = {};
+
+  if (token && !isLoginRequest) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  if (activeWorkspaceId && !isLoginRequest) {
+    headers['X-Workspace-Id'] = activeWorkspaceId;
+  }
+
+  const authRequest = Object.keys(headers).length ? request.clone({ setHeaders: headers }) : request;
 
   return next(authRequest).pipe(
     catchError((error: HttpErrorResponse) => {

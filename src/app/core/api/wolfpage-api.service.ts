@@ -23,7 +23,7 @@ export interface TemplateDto {
 }
 
 export interface CreatePageRequest {
-  tenantId: string;
+  workspaceId: string;
   templateVersionId: string;
   pageName: string;
   slug: string;
@@ -42,7 +42,7 @@ export interface PageRequestResponse {
 
 export interface PageResponse {
   id: string;
-  tenantId: string;
+  workspaceId: string;
   templateVersionId: string;
   requestId: string;
   title: string;
@@ -66,7 +66,7 @@ export interface RoleDto {
 
 export interface UserDto {
   id: string;
-  tenantId: string;
+  workspaceId: string;
   email: string;
   fullName: string;
   isActive: boolean;
@@ -83,12 +83,38 @@ export interface CreateUserRequest {
   roles: string[];
 }
 
+export interface WorkspaceDto {
+  id: string;
+  name: string;
+  email: string;
+  workspaceType: string;
+  profileType: string;
+  isActive: boolean;
+  createdAt: string;
+  roles: string[];
+}
+
+export interface CreateWorkspaceRequest {
+  name: string;
+  email: string;
+  workspaceType: string;
+  profileType: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class WolfpageApiService {
   private readonly http = inject(HttpClient);
 
   getTemplates(): Observable<TemplateDto[]> {
     return this.http.get<TemplateDto[]>(`${API_BASE_URL}/templates`);
+  }
+
+  getWorkspaces(): Observable<WorkspaceDto[]> {
+    return this.http.get<WorkspaceDto[]>(`${API_BASE_URL}/workspaces`);
+  }
+
+  createWorkspace(request: CreateWorkspaceRequest): Observable<WorkspaceDto> {
+    return this.http.post<WorkspaceDto>(`${API_BASE_URL}/workspaces`, request);
   }
 
   generatePage(request: CreatePageRequest): Observable<PageRequestResponse> {
