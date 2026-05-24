@@ -1,0 +1,78 @@
+:host {
+  display: block;
+}
+
+.wolf-login-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.wolf-login-surface {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 16px;
+  background-image: url("/assets/powerfuladmin/images/backgrounds/login-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wolf-login-surface::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: rgba(3, 12, 27, 0.62);
+}
+
+.wolf-login-shape {
+  z-index: 1;
+  display: flex;
+  width: min(90%, 420px);
+}
+
+.wolf-login-shape::before,
+.wolf-login-shape::after {
+  display: none;
+}
+
+.wolf-login-content {
+  position: relative;
+  z-index: 2;
+}
+
+.wolf-login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 22px 60px rgba(3, 12, 27, 0.28);
+}
+
+.wolf-login-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .wolf-login-surface {
+    background: linear-gradient(135deg, #071426 0%, #0b2545 100%);
+    background-image: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .wolf-login-surface {
+    padding: 24px 12px;
+  }
+
+  .wolf-login-shape {
+    width: min(92%, 420px);
+  }
+
+  .wolf-login-card {
+    margin-inline: 0 !important;
+  }
+}

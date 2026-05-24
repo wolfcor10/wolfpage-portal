@@ -1,0 +1,40 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Paginas</h1>
+      <p class="muted">Paginas generadas para el workspace actual</p>
+    </div>
+    <a class="button" routerLink="/app/pages/new">Crear pagina</a>
+  </div>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  <section class="panel">
+    @if (pages.length) {
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Titulo</th>
+            <th>Slug</th>
+            <th>Estado</th>
+            <th>Actualizada</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (page of pages; track page.id) {
+            <tr>
+              <td><a [routerLink]="['/app/pages', page.id]">{{ page.title }}</a></td>
+              <td>{{ page.slug }}</td>
+              <td><span class="status ok">{{ page.status }}</span></td>
+              <td>{{ page.updatedAt | date: 'short' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else if (!loading) {
+      <p class="muted">No hay paginas generadas.</p>
+    }
+  </section>
+</div>

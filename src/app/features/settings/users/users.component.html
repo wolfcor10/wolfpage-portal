@@ -1,0 +1,76 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Usuarios</h1>
+      <p class="muted">Administracion interna del workspace actual</p>
+    </div>
+  </div>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  <section class="grid two">
+    <form class="panel grid" [formGroup]="form" (ngSubmit)="create()">
+      <h2>Nuevo usuario</h2>
+
+      <label class="field">
+        <span>Nombre</span>
+        <input class="input" type="text" formControlName="fullName" />
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input class="input" type="email" formControlName="email" />
+      </label>
+
+      <label class="field">
+        <span>Contrasena</span>
+        <input class="input" type="password" formControlName="password" />
+      </label>
+
+      <label class="field">
+        <span>Roles</span>
+        <select class="select" multiple formControlName="roles">
+          @for (role of roles; track role.id) {
+            <option [value]="role.code">{{ role.name }}</option>
+          }
+        </select>
+      </label>
+
+      <div>
+        <button class="button" type="submit" [disabled]="saving">
+          {{ saving ? 'Guardando...' : 'Crear usuario' }}
+        </button>
+      </div>
+    </form>
+
+    <section class="panel">
+      @if (users.length) {
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Roles</th>
+              <th>Ultimo login</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users; track user.id) {
+              <tr>
+                <td>
+                  <strong>{{ user.fullName }}</strong>
+                  <p class="muted">{{ user.email }}</p>
+                </td>
+                <td>{{ user.roles.join(', ') }}</td>
+                <td>{{ user.lastLoginAt ? (user.lastLoginAt | date: 'short') : '-' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else if (!loading) {
+        <p class="muted">No hay usuarios.</p>
+      }
+    </section>
+  </section>
+</div>

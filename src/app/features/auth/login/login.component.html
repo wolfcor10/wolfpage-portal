@@ -1,0 +1,71 @@
+<main id="main-wrapper" class="p-0 wolf-login-page">
+  <div class="wolf-login-surface min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="auth-login-shape-box position-relative wolf-login-shape">
+      <div class="wolf-login-content d-flex align-items-center justify-content-center w-100">
+        <div class="card auth-card mb-0 mx-3 wolf-login-card">
+          <div class="card-body pt-5">
+            <div
+              class="text-nowrap text-center d-flex align-items-center justify-content-center gap-3 mb-5 w-100"
+            >
+              <img
+                src="assets/powerfuladmin/images/logos/wolfpage-icon-small.png"
+                class="wolf-login-logo"
+                alt="WolfPage"
+              />
+              <strong class="fs-5 text-dark">WolfPage</strong>
+            </div>
+
+            <div class="position-relative text-center my-4">
+              <p class="mb-0 fs-4 px-3 d-inline-block bg-white text-dark z-1 position-relative">
+                Portal interno
+              </p>
+              <span class="border-top w-100 position-absolute top-50 start-50 translate-middle"></span>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="mb-3">
+                <label for="loginEmail" class="form-label">Email</label>
+                <input
+                  id="loginEmail"
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                  autocomplete="username"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input
+                  id="loginPassword"
+                  type="password"
+                  class="form-control"
+                  formControlName="password"
+                  autocomplete="current-password"
+                />
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class="form-check">
+                  <input class="form-check-input primary" type="checkbox" id="rememberDevice" checked />
+                  <label class="form-check-label text-dark" for="rememberDevice">
+                    Remember this device
+                  </label>
+                </div>
+                <span class="text-primary fw-medium">Internal access</span>
+              </div>
+
+              @if (error) {
+                <p class="text-danger fw-semibold mb-3">{{ error }}</p>
+              }
+
+              <button class="btn btn-primary w-100 mb-4 rounded-pill" type="submit" [disabled]="loading">
+                {{ loading ? 'Signing in...' : 'Sign In' }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
