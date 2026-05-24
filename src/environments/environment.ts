@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://wolfware-api-h8fdbxeveyaxcff4.canadacentral-01.azurewebsites.net/api',
+  apiBaseUrl: 'https://wolfware-api-h8fdbxevexaxcff4.canadacentral-01.azurewebsites.net/api',
 };
