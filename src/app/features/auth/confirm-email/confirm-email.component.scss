@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  --wolf-confirm-primary: #0ea5e9;
+  --wolf-confirm-primary-hover: #0284c7;
+}
+
+.wolf-confirm-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.wolf-confirm-surface {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 16px;
+  background-image: url("/assets/powerfuladmin/images/backgrounds/login-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wolf-confirm-surface::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: rgba(3, 12, 27, 0.62);
+}
+
+.wolf-confirm-card {
+  position: relative;
+  z-index: 1;
+  width: min(90%, 420px);
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 22px 60px rgba(3, 12, 27, 0.28);
+}
+
+.wolf-confirm-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.wolf-confirm-action {
+  border-color: var(--wolf-confirm-primary);
+  background: var(--wolf-confirm-primary);
+}
+
+.wolf-confirm-action:hover,
+.wolf-confirm-action:focus-visible {
+  border-color: var(--wolf-confirm-primary-hover);
+  background: var(--wolf-confirm-primary-hover);
+}
+
+@media (max-width: 768px) {
+  .wolf-confirm-surface {
+    background: linear-gradient(135deg, #071426 0%, #0b2545 100%);
+    background-image: none;
+  }
+}

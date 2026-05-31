@@ -9,6 +9,18 @@ export const routes: Routes = [
       import('./features/auth/login/login.component').then((m) => m.LoginComponent),
   },
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./features/auth/register/register.component').then((m) => m.RegisterComponent),
+  },
+  {
+    path: 'confirm-email',
+    loadComponent: () =>
+      import('./features/auth/confirm-email/confirm-email.component').then(
+        (m) => m.ConfirmEmailComponent,
+      ),
+  },
+  {
     path: 'app',
     component: AppShellComponent,
     canActivate: [authGuard],
