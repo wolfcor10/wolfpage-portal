@@ -22,6 +22,16 @@
               <span class="border-top w-100 position-absolute top-50 start-50 translate-middle"></span>
             </div>
 
+            <button
+              class="btn wolf-google-button w-100 mb-4 rounded-pill"
+              type="button"
+              [disabled]="googleLoading || !googleConfigured"
+              (click)="signInWithGoogle()"
+            >
+              <span class="wolf-google-mark">G</span>
+              {{ googleLoading ? 'Connecting...' : 'Sign in with Google' }}
+            </button>
+
             <form [formGroup]="form" (ngSubmit)="submit()">
               <div class="mb-3">
                 <label for="loginEmail" class="form-label">Email</label>
@@ -52,17 +62,22 @@
                     Remember this device
                   </label>
                 </div>
-                <span class="text-primary fw-medium">Internal access</span>
+                <span class="wolf-login-link fw-medium">Internal access</span>
               </div>
 
               @if (error) {
                 <p class="text-danger fw-semibold mb-3">{{ error }}</p>
               }
 
-              <button class="btn btn-primary w-100 mb-4 rounded-pill" type="submit" [disabled]="loading">
+              <button class="btn btn-primary wolf-login-submit w-100 mb-4 rounded-pill" type="submit" [disabled]="loading">
                 {{ loading ? 'Signing in...' : 'Sign In' }}
               </button>
             </form>
+
+            <p class="text-center mb-0 text-muted">
+              New to WolfPage?
+              <a class="wolf-login-link fw-semibold" routerLink="/register">Create an account</a>
+            </p>
           </div>
         </div>
       </div>

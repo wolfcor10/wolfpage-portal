@@ -10,15 +10,20 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const router = inject(Router);
   const token = auth.getAccessToken();
   const activeWorkspaceId = auth.getActiveWorkspaceId();
-  const isLoginRequest = request.url === `${API_BASE_URL}/auth/login`;
+  const isPublicAuthRequest =
+    request.url === `${API_BASE_URL}/auth/login` ||
+    request.url === `${API_BASE_URL}/auth/register` ||
+    request.url === `${API_BASE_URL}/auth/confirm-email` ||
+    request.url === `${API_BASE_URL}/auth/resend-confirmation` ||
+    request.url === `${API_BASE_URL}/auth/google`;
 
   const headers: Record<string, string> = {};
 
-  if (token && !isLoginRequest) {
+  if (token && !isPublicAuthRequest) {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  if (activeWorkspaceId && !isLoginRequest) {
+  if (activeWorkspaceId && !isPublicAuthRequest) {
     headers['X-Workspace-Id'] = activeWorkspaceId;
   }
 
@@ -26,7 +31,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
 
   return next(authRequest).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 && !isLoginRequest) {
+      if (error.status === 401 && !isPublicAuthRequest) {
         auth.logout();
         void router.navigate(['/login'], { queryParams: { returnUrl: router.url } });
       }

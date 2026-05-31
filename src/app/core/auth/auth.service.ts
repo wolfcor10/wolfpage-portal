@@ -2,7 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { API_BASE_URL } from '../api/api.config';
-import { CurrentUser, LoginRequest, LoginResponse } from './auth.models';
+import {
+  ConfirmEmailRequest,
+  CurrentUser,
+  EmailConfirmationResponse,
+  GoogleAuthRequest,
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
+  RegisterResponse,
+  ResendEmailConfirmationRequest,
+} from './auth.models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -20,12 +30,36 @@ export class AuthService {
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${API_BASE_URL}/auth/login`, request).pipe(
+      tap((response) => this.storeSession(response)),
+    );
+  }
+
+  register(request: RegisterRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${API_BASE_URL}/auth/register`, request).pipe(
       tap((response) => {
-        localStorage.setItem(this.tokenKey, response.accessToken);
-        localStorage.setItem(this.expiresAtKey, response.expiresAt);
-        localStorage.setItem(this.userKey, JSON.stringify(response.user));
-        this.currentUserSubject.next(response.user);
+        if (response.session) {
+          this.storeSession(response.session);
+        }
       }),
+    );
+  }
+
+  confirmEmail(request: ConfirmEmailRequest): Observable<EmailConfirmationResponse> {
+    return this.http.post<EmailConfirmationResponse>(`${API_BASE_URL}/auth/confirm-email`, request);
+  }
+
+  resendEmailConfirmation(
+    request: ResendEmailConfirmationRequest,
+  ): Observable<EmailConfirmationResponse> {
+    return this.http.post<EmailConfirmationResponse>(
+      `${API_BASE_URL}/auth/resend-confirmation`,
+      request,
+    );
+  }
+
+  loginWithGoogle(request: GoogleAuthRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${API_BASE_URL}/auth/google`, request).pipe(
+      tap((response) => this.storeSession(response)),
     );
   }
 
@@ -103,5 +137,12 @@ export class AuthService {
       localStorage.removeItem(this.userKey);
       return null;
     }
+  }
+
+  private storeSession(response: LoginResponse): void {
+    localStorage.setItem(this.tokenKey, response.accessToken);
+    localStorage.setItem(this.expiresAtKey, response.expiresAt);
+    localStorage.setItem(this.userKey, JSON.stringify(response.user));
+    this.currentUserSubject.next(response.user);
   }
 }

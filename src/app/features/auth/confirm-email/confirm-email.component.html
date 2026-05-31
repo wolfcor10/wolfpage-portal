@@ -1,0 +1,21 @@
+<main id="main-wrapper" class="p-0 wolf-confirm-page">
+  <div class="wolf-confirm-surface min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="card wolf-confirm-card mx-3">
+      <div class="card-body text-center p-5">
+        <img
+          src="assets/powerfuladmin/images/logos/wolfpage-icon-small.png"
+          class="wolf-confirm-logo mb-3"
+          alt="WolfPage"
+        />
+        <h1 class="fs-4 text-dark mb-3">WolfPage</h1>
+        <p class="mb-4" [class.text-success]="succeeded" [class.text-danger]="!loading && !succeeded">
+          {{ message }}
+        </p>
+
+        @if (!loading) {
+          <a class="btn btn-primary wolf-confirm-action rounded-pill px-4" routerLink="/login">Go to login</a>
+        }
+      </div>
+    </div>
+  </div>
+</main>

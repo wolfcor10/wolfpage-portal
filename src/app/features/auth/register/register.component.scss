@@ -1,16 +1,16 @@
 :host {
   display: block;
-  --wolf-login-primary: #0ea5e9;
-  --wolf-login-primary-hover: #0284c7;
-  --wolf-login-primary-focus: rgba(14, 165, 233, 0.22);
+  --wolf-register-primary: #0ea5e9;
+  --wolf-register-primary-hover: #0284c7;
+  --wolf-register-primary-focus: rgba(14, 165, 233, 0.22);
 }
 
-.wolf-login-page {
+.wolf-register-page {
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-.wolf-login-surface {
+.wolf-register-surface {
   position: relative;
   overflow: hidden;
   padding: 32px 16px;
@@ -20,7 +20,7 @@
   background-size: cover;
 }
 
-.wolf-login-surface::before {
+.wolf-register-surface::before {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -28,23 +28,14 @@
   background: rgba(3, 12, 27, 0.62);
 }
 
-.wolf-login-shape {
+.wolf-register-shape {
+  position: relative;
   z-index: 1;
   display: flex;
-  width: min(90%, 420px);
+  width: min(92%, 480px);
 }
 
-.wolf-login-shape::before,
-.wolf-login-shape::after {
-  display: none;
-}
-
-.wolf-login-content {
-  position: relative;
-  z-index: 2;
-}
-
-.wolf-login-card {
+.wolf-register-card {
   position: relative;
   z-index: 2;
   width: 100%;
@@ -53,30 +44,26 @@
   box-shadow: 0 22px 60px rgba(3, 12, 27, 0.28);
 }
 
-.wolf-login-logo {
+.wolf-register-logo {
   width: 54px;
   height: 54px;
   object-fit: contain;
 }
 
-.wolf-login-card .form-control:focus {
-  border-color: var(--wolf-login-primary);
-  box-shadow: 0 0 0 0.2rem var(--wolf-login-primary-focus);
+.wolf-register-card .form-control:focus,
+.wolf-register-card .form-select:focus {
+  border-color: var(--wolf-register-primary);
+  box-shadow: 0 0 0 0.2rem var(--wolf-register-primary-focus);
 }
 
-.wolf-login-card .form-check-input:checked {
-  border-color: var(--wolf-login-primary);
-  background-color: var(--wolf-login-primary);
-}
-
-.wolf-login-link {
-  color: var(--wolf-login-primary);
+.wolf-register-link {
+  color: var(--wolf-register-primary);
   text-decoration: none;
 }
 
-.wolf-login-link:hover,
-.wolf-login-link:focus-visible {
-  color: var(--wolf-login-primary-hover);
+.wolf-register-link:hover,
+.wolf-register-link:focus-visible {
+  color: var(--wolf-register-primary-hover);
   text-decoration: underline;
 }
 
@@ -93,8 +80,8 @@
 
 .wolf-google-button:hover:not(:disabled),
 .wolf-google-button:focus-visible:not(:disabled) {
-  border-color: var(--wolf-login-primary);
-  box-shadow: 0 0 0 0.2rem var(--wolf-login-primary-focus);
+  border-color: var(--wolf-register-primary);
+  box-shadow: 0 0 0 0.2rem var(--wolf-register-primary-focus);
 }
 
 .wolf-google-button:disabled {
@@ -114,39 +101,39 @@
   border-radius: 50%;
 }
 
-.wolf-login-submit {
-  border-color: var(--wolf-login-primary);
-  background: var(--wolf-login-primary);
+.wolf-register-submit {
+  border-color: var(--wolf-register-primary);
+  background: var(--wolf-register-primary);
 }
 
-.wolf-login-submit:hover,
-.wolf-login-submit:focus-visible {
-  border-color: var(--wolf-login-primary-hover);
-  background: var(--wolf-login-primary-hover);
+.wolf-register-submit:hover,
+.wolf-register-submit:focus-visible {
+  border-color: var(--wolf-register-primary-hover);
+  background: var(--wolf-register-primary-hover);
 }
 
-.wolf-login-submit:disabled {
-  border-color: var(--wolf-login-primary);
-  background: var(--wolf-login-primary);
+.wolf-register-submit:disabled {
+  border-color: var(--wolf-register-primary);
+  background: var(--wolf-register-primary);
 }
 
 @media (max-width: 768px) {
-  .wolf-login-surface {
+  .wolf-register-surface {
     background: linear-gradient(135deg, #071426 0%, #0b2545 100%);
     background-image: none;
   }
 }
 
 @media (max-width: 575.98px) {
-  .wolf-login-surface {
+  .wolf-register-surface {
     padding: 24px 12px;
   }
 
-  .wolf-login-shape {
-    width: min(92%, 420px);
+  .wolf-register-shape {
+    width: min(94%, 480px);
   }
 
-  .wolf-login-card {
+  .wolf-register-card {
     margin-inline: 0 !important;
   }
 }

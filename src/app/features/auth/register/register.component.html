@@ -1,0 +1,103 @@
+<main id="main-wrapper" class="p-0 wolf-register-page">
+  <div class="wolf-register-surface min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="wolf-register-shape">
+      <div class="card auth-card mb-0 mx-3 wolf-register-card">
+        <div class="card-body pt-5">
+          <div class="text-nowrap text-center d-flex align-items-center justify-content-center gap-3 mb-4 w-100">
+            <img
+              src="assets/powerfuladmin/images/logos/wolfpage-icon-small.png"
+              class="wolf-register-logo"
+              alt="WolfPage"
+            />
+            <strong class="fs-5 text-dark">WolfPage</strong>
+          </div>
+
+          <div class="d-grid gap-3 mb-4">
+            <button
+              class="btn wolf-google-button rounded-pill"
+              type="button"
+              [disabled]="googleLoading || !googleConfigured"
+              (click)="signUpWithGoogle()"
+            >
+              <span class="wolf-google-mark">G</span>
+              {{ googleLoading ? 'Connecting...' : 'Sign up with Google' }}
+            </button>
+          </div>
+
+          <div class="position-relative text-center my-4">
+            <p class="mb-0 fs-4 px-3 d-inline-block bg-white text-dark z-1 position-relative">
+              Create workspace
+            </p>
+            <span class="border-top w-100 position-absolute top-50 start-50 translate-middle"></span>
+          </div>
+
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="mb-3">
+              <label for="registerFullName" class="form-label">Name</label>
+              <input id="registerFullName" type="text" class="form-control" formControlName="fullName" autocomplete="name" />
+            </div>
+
+            <div class="mb-3">
+              <label for="registerEmail" class="form-label">Email address</label>
+              <input id="registerEmail" type="email" class="form-control" formControlName="email" autocomplete="email" />
+            </div>
+
+            <div class="mb-3">
+              <label for="registerPassword" class="form-label">Password</label>
+              <input
+                id="registerPassword"
+                type="password"
+                class="form-control"
+                formControlName="password"
+                autocomplete="new-password"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="workspaceName" class="form-label">Workspace</label>
+              <input id="workspaceName" type="text" class="form-control" formControlName="workspaceName" />
+            </div>
+
+            <div class="row g-3 mb-4">
+              <div class="col-12 col-sm-6">
+                <label for="workspaceType" class="form-label">Workspace type</label>
+                <select id="workspaceType" class="form-select" formControlName="workspaceType">
+                  <option value="Business">Business</option>
+                  <option value="Individual">Individual</option>
+                  <option value="Agency">Agency</option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label for="profileType" class="form-label">Profile type</label>
+                <select id="profileType" class="form-select" formControlName="profileType">
+                  <option value="Business">Business</option>
+                  <option value="Portfolio">Portfolio</option>
+                  <option value="PersonalBrand">Personal brand</option>
+                  <option value="Ecommerce">Ecommerce</option>
+                  <option value="Landing">Landing</option>
+                </select>
+              </div>
+            </div>
+
+            @if (error) {
+              <p class="text-danger fw-semibold mb-3">{{ error }}</p>
+            }
+
+            @if (message) {
+              <p class="text-success fw-semibold mb-3">{{ message }}</p>
+            }
+
+            <button class="btn btn-primary wolf-register-submit w-100 mb-4 rounded-pill" type="submit" [disabled]="loading">
+              {{ loading ? 'Creating...' : 'Sign Up' }}
+            </button>
+          </form>
+
+          <p class="text-center mb-0 text-muted">
+            Already have an account?
+            <a class="wolf-register-link fw-semibold" routerLink="/login">Sign In</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

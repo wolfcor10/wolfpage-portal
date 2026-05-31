@@ -5,15 +5,22 @@ Frontend administrativo para el MVP interno de WolfPage.
 ## Flujo MVP
 
 - `/login`: acceso interno con JWT.
+- `/register`: registro de usuario y workspace inicial.
+- `/confirm-email`: confirmacion de correo desde enlace.
 - `/app/dashboard`: resumen operativo.
 - `/app/templates`: templates publicados.
 - `/app/pages/new`: generacion de pagina desde template.
 - `/app/requests/:id`: seguimiento de solicitud.
 - `/app/pages`: paginas generadas.
 - `/app/pages/:id`: preview y detalle.
-- `/app/settings/users`: usuarios internos por tenant.
+- `/app/settings/users`: usuarios internos por workspace.
 
-El API base usado por el portal esta en `src/app/core/api/api.config.ts`.
+El API base usado por el portal esta en `src/app/core/api/api.config.ts` y sale de los environments:
+
+- `src/environments/environment.development.ts`: API local para `ng serve`.
+- `src/environments/environment.ts`: API publicada en Azure App Service.
+
+Para activar login/registro con Google, configurar `googleClientId` en los environments del portal y `GoogleAuth__ClientId` en el API.
 
 ## Development server
 
