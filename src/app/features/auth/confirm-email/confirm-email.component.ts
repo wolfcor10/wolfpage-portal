@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { timeout } from 'rxjs';
 import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
@@ -26,7 +27,7 @@ export class ConfirmEmailComponent implements OnInit {
       return;
     }
 
-    this.auth.confirmEmail({ token }).subscribe({
+    this.auth.confirmEmail({ token }).pipe(timeout(15000)).subscribe({
       next: (response) => {
         this.loading = false;
         this.succeeded = response.succeeded;
@@ -35,7 +36,7 @@ export class ConfirmEmailComponent implements OnInit {
       error: () => {
         this.loading = false;
         this.succeeded = false;
-        this.message = 'The confirmation link could not be validated.';
+        this.message = 'The confirmation link could not be validated. Check that the API is running.';
       },
     });
   }

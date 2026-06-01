@@ -17,7 +17,11 @@
     <section class="grid two">
       <article class="panel">
         <h2>Preview</h2>
-        <iframe class="preview" [srcdoc]="page.htmlContent"></iframe>
+        @if (page.htmlContent) {
+          <iframe class="preview" [srcdoc]="page.htmlContent"></iframe>
+        } @else {
+          <p class="muted">La pagina aun no tiene HTML generado.</p>
+        }
       </article>
 
       <article class="panel grid">
@@ -31,14 +35,22 @@
         </div>
         <div>
           <p class="muted">Request</p>
-          <a [routerLink]="['/app/requests', page.requestId]">{{ page.requestId }}</a>
+          @if (page.requestId) {
+            <a [routerLink]="['/app/requests', page.requestId]">{{ page.requestId }}</a>
+          } @else {
+            <strong>No disponible</strong>
+          }
+        </div>
+        <div>
+          <p class="muted">Archivo generado</p>
+          <strong>{{ page.generatedFilePath || 'Pendiente' }}</strong>
         </div>
       </article>
     </section>
 
     <section class="panel">
       <h2>HTML</h2>
-      <pre>{{ page.htmlContent }}</pre>
+      <pre>{{ page.htmlContent || 'Pendiente de generacion.' }}</pre>
     </section>
   }
 </div>
