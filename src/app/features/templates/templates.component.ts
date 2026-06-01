@@ -1,11 +1,10 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TemplateDto, WolfpageApiService } from '../../core/api/wolfpage-api.service';
 
 @Component({
   selector: 'app-templates',
-  imports: [DatePipe, RouterLink],
+  imports: [RouterLink],
   templateUrl: './templates.component.html',
 })
 export class TemplatesComponent implements OnInit {

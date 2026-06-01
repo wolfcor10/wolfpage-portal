@@ -2,7 +2,7 @@
   <div class="page-header">
     <div>
       <h1 class="page-title">Templates</h1>
-      <p class="muted">Versiones publicadas disponibles para generar paginas</p>
+      <p class="muted">Templates locales disponibles para generar landings</p>
     </div>
     <a class="button" routerLink="/app/pages/new">Crear pagina</a>
   </div>
@@ -19,23 +19,23 @@
             <h2>{{ template.name }}</h2>
             <p class="muted">{{ template.category || template.code }}</p>
           </div>
-          <span class="status ok">Activo</span>
+          <span class="status" [class.ok]="template.enabled">{{ template.enabled ? 'Activo' : 'Inactivo' }}</span>
         </div>
         <p>{{ template.description || 'Sin descripcion.' }}</p>
         <table class="table">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Version</th>
               <th>Engine</th>
-              <th>Fecha</th>
             </tr>
           </thead>
           <tbody>
             @for (version of template.versions; track version.id) {
               <tr>
+                <td>{{ version.id }}</td>
                 <td>{{ version.versionNumber }}</td>
                 <td>{{ version.engine || 'simple' }}</td>
-                <td>{{ version.createdAt | date: 'shortDate' }}</td>
               </tr>
             }
           </tbody>

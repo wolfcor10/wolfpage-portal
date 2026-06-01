@@ -1,8 +1,8 @@
 <div class="page">
   <div class="page-header">
     <div>
-      <h1 class="page-title">Crear pagina</h1>
-      <p class="muted">Generacion desde template publicado</p>
+      <h1 class="page-title">Crear landing</h1>
+      <p class="muted">Workspace actual</p>
     </div>
   </div>
 
@@ -10,40 +10,202 @@
     <p class="error">{{ error }}</p>
   }
 
-  <form class="panel grid" [formGroup]="form" (ngSubmit)="submit()">
-    <label class="field">
-      <span>Template</span>
-      <select class="select" formControlName="templateVersionId">
-        <option value="">Selecciona una version</option>
-        @for (option of options; track option.version.id) {
-          <option [value]="option.version.id">
-            {{ option.template.name }} v{{ option.version.versionNumber }}
-          </option>
-        }
-      </select>
-    </label>
-
-    <div class="grid two">
-      <label class="field">
-        <span>Nombre</span>
-        <input class="input" type="text" formControlName="pageName" />
-      </label>
-
-      <label class="field">
-        <span>Slug</span>
-        <input class="input" type="text" formControlName="slug" placeholder="mi-negocio" />
-      </label>
+  <form class="panel page-wizard" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="wizard-tabs" role="tablist" aria-label="Pasos">
+      @for (step of steps; track step; let index = $index) {
+        <button
+          type="button"
+          class="wizard-tab"
+          [class.active]="currentStep === index"
+          [class.has-error]="findFirstInvalidStep() === index && error"
+          (click)="goToStep(index)"
+        >
+          <span>{{ index + 1 }}</span>
+          {{ step }}
+        </button>
+      }
     </div>
 
-    <label class="field">
-      <span>Contenido JSON</span>
-      <textarea class="textarea" formControlName="contentJson"></textarea>
-    </label>
+    @if (currentStep === 0) {
+      <section class="wizard-section">
+        <div class="grid two">
+          <label class="field">
+            <span>Template</span>
+            <select class="select" formControlName="selectedTemplateId">
+              @for (template of templates; track template.id) {
+                <option [value]="template.id">{{ template.name }}</option>
+              }
+            </select>
+          </label>
 
-    <div>
-      <button class="button" type="submit" [disabled]="submitting || loadingTemplates">
-        {{ submitting ? 'Generando...' : 'Generar' }}
+          <label class="field">
+            <span>Slug</span>
+            <input class="input" type="text" formControlName="slug" placeholder="mi-negocio" />
+          </label>
+        </div>
+
+        <div class="grid two">
+          <label class="field">
+            <span>Nombre del negocio</span>
+            <input class="input" type="text" formControlName="businessName" />
+          </label>
+
+          <label class="field">
+            <span>Categoria</span>
+            <input class="input" type="text" formControlName="category" placeholder="Restaurante" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Descripcion</span>
+          <textarea class="textarea compact" formControlName="description"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Logo URL</span>
+          <input class="input" type="url" formControlName="logoUrl" />
+        </label>
+      </section>
+    }
+
+    @if (currentStep === 1) {
+      <section class="wizard-section">
+        <label class="field">
+          <span>Titulo principal</span>
+          <input class="input" type="text" formControlName="heroTitle" />
+        </label>
+
+        <label class="field">
+          <span>Subtitulo</span>
+          <textarea class="textarea compact" formControlName="heroSubtitle"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Imagen principal URL</span>
+          <input class="input" type="url" formControlName="heroImageUrl" />
+        </label>
+      </section>
+    }
+
+    @if (currentStep === 2) {
+      <section class="wizard-section">
+        <div class="grid two">
+          <label class="field">
+            <span>Email</span>
+            <input class="input" type="email" formControlName="email" />
+          </label>
+
+          <label class="field">
+            <span>Telefono</span>
+            <input class="input" type="tel" formControlName="phone" />
+          </label>
+        </div>
+
+        <div class="grid two">
+          <label class="field">
+            <span>WhatsApp</span>
+            <input class="input" type="tel" formControlName="whatsapp" />
+          </label>
+
+          <label class="field">
+            <span>Horario</span>
+            <input class="input" type="text" formControlName="openingHours" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Direccion</span>
+          <input class="input" type="text" formControlName="address" />
+        </label>
+
+        <div class="grid two" formGroupName="socialLinks">
+          <label class="field">
+            <span>Instagram</span>
+            <input class="input" type="url" formControlName="instagram" />
+          </label>
+
+          <label class="field">
+            <span>Facebook</span>
+            <input class="input" type="url" formControlName="facebook" />
+          </label>
+
+          <label class="field">
+            <span>LinkedIn</span>
+            <input class="input" type="url" formControlName="linkedin" />
+          </label>
+
+          <label class="field">
+            <span>Sitio web</span>
+            <input class="input" type="url" formControlName="website" />
+          </label>
+        </div>
+      </section>
+    }
+
+    @if (currentStep === 3) {
+      <section class="wizard-section" formArrayName="items">
+        <div class="items-toolbar">
+          <h2>Items</h2>
+          <button class="button secondary" type="button" (click)="addItem()">Agregar item</button>
+        </div>
+
+        @for (item of items.controls; track item; let index = $index) {
+          <div class="item-row" [formGroupName]="index">
+            <div class="grid two">
+              <label class="field">
+                <span>Nombre</span>
+                <input class="input" type="text" formControlName="name" />
+              </label>
+
+              <label class="field">
+                <span>Precio</span>
+                <input class="input" type="text" formControlName="price" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Descripcion</span>
+              <textarea class="textarea compact" formControlName="description"></textarea>
+            </label>
+
+            <div class="grid two">
+              <label class="field">
+                <span>Categoria</span>
+                <input class="input" type="text" formControlName="category" />
+              </label>
+
+              <label class="field">
+                <span>Imagen URL</span>
+                <input class="input" type="url" formControlName="imageUrl" />
+              </label>
+            </div>
+
+            <div class="item-actions">
+              <label class="check-field">
+                <input type="checkbox" formControlName="enabled" />
+                <span>Habilitado</span>
+              </label>
+              <button class="button secondary" type="button" (click)="removeItem(index)">
+                Quitar
+              </button>
+            </div>
+          </div>
+        }
+      </section>
+    }
+
+    <div class="wizard-actions">
+      <button class="button secondary" type="button" (click)="previousStep()" [disabled]="currentStep === 0">
+        Anterior
       </button>
+
+      @if (currentStep < steps.length - 1) {
+        <button class="button" type="button" (click)="nextStep()">Siguiente</button>
+      } @else {
+        <button class="button" type="submit" [disabled]="submitting || loadingTemplates">
+          {{ submitting ? 'Generando...' : 'Generar landing' }}
+        </button>
+      }
     </div>
   </form>
 </div>

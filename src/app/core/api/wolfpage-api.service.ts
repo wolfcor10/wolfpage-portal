@@ -8,7 +8,6 @@ export interface TemplateVersionDto {
   versionNumber: number;
   engine?: string | null;
   isPublished: boolean;
-  createdAt: string;
 }
 
 export interface TemplateDto {
@@ -17,17 +16,55 @@ export interface TemplateDto {
   name: string;
   description?: string | null;
   category?: string | null;
-  isActive: boolean;
-  createdAt: string;
+  enabled: boolean;
   versions: TemplateVersionDto[];
 }
 
 export interface CreatePageRequest {
   workspaceId: string;
-  templateVersionId: string;
+  templateVersionId?: string | null;
+  selectedTemplateId: string;
   pageName: string;
   slug: string;
   content: Record<string, unknown>;
+}
+
+export interface BusinessPageCreateRequest {
+  workspaceId?: string | null;
+  slug?: string | null;
+  businessName: string;
+  category?: string | null;
+  description: string;
+  logoUrl?: string | null;
+  heroTitle: string;
+  heroSubtitle?: string | null;
+  heroImageUrl?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  address?: string | null;
+  whatsapp?: string | null;
+  openingHours?: string | null;
+  socialLinks: SocialLinksDto;
+  selectedTemplateId: string;
+  items: BusinessItemDto[];
+  status?: string;
+}
+
+export interface BusinessItemDto {
+  name: string;
+  description: string;
+  price?: string | null;
+  imageUrl?: string | null;
+  category?: string | null;
+  enabled: boolean;
+}
+
+export interface SocialLinksDto {
+  facebook?: string | null;
+  instagram?: string | null;
+  tiktok?: string | null;
+  linkedin?: string | null;
+  website?: string | null;
 }
 
 export interface PageRequestResponse {
@@ -43,18 +80,45 @@ export interface PageRequestResponse {
 export interface PageResponse {
   id: string;
   workspaceId: string;
-  templateVersionId: string;
-  requestId: string;
+  templateVersionId?: string | null;
+  requestId?: string | null;
+  selectedTemplateId: string;
   title: string;
   slug: string;
   routePath: string;
-  htmlContent: string;
+  htmlContent?: string | null;
   cssContent?: string | null;
   jsContent?: string | null;
+  businessName: string;
+  businessCategory?: string | null;
+  businessDescription: string;
+  logoUrl?: string | null;
+  heroTitle: string;
+  heroSubtitle?: string | null;
+  heroImageUrl?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  address?: string | null;
+  whatsApp?: string | null;
+  openingHours?: string | null;
+  socialLinksJson?: string | null;
+  generatedFilePath?: string | null;
   status: string;
   publishedUrl?: string | null;
   createdAt: string;
   updatedAt: string;
+  items: PageItemDto[];
+}
+
+export interface PageItemDto {
+  id: string;
+  name: string;
+  description: string;
+  price?: string | null;
+  imageUrl?: string | null;
+  category?: string | null;
+  enabled: boolean;
+  sortOrder: number;
 }
 
 export interface RoleDto {
@@ -119,6 +183,10 @@ export class WolfpageApiService {
 
   generatePage(request: CreatePageRequest): Observable<PageRequestResponse> {
     return this.http.post<PageRequestResponse>(`${API_BASE_URL}/pages/generate`, request);
+  }
+
+  createPage(request: BusinessPageCreateRequest): Observable<PageRequestResponse> {
+    return this.http.post<PageRequestResponse>(`${API_BASE_URL}/pages`, request);
   }
 
   getRequest(id: string): Observable<PageRequestResponse> {
